@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  Platform
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuth } from '@/contexts/AuthContext';
@@ -19,7 +20,9 @@ const MaterialsScreen = () => {
 
   const [notes, setNotes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [newNote, setNewNote] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newUnits, setNewUnits] = useState('');
+  const [newQuantity, setNewQuantity] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -52,9 +55,9 @@ const MaterialsScreen = () => {
 
   // Add New Note
   const addNote = async () => {
-    if (newNote.trim() === '') return;
+    if (newName.trim() === '') return;
 
-    const response = await noteService.addNote(user.$id, newNote);
+    const response = await noteService.addNote(user.$id, newName, newQuantity, newUnits);
 
     if (response.error) {
       Alert.alert('Error', response.error);
@@ -62,30 +65,46 @@ const MaterialsScreen = () => {
       setNotes([...notes, response.data]);
     }
 
-    setNewNote('');
+    //clear inputs
+    setNewName('');
+    setNewUnits('');
+    setNewQuantity('');
     setModalVisible(false);
   };
 
   // Delete Note
   const deleteNote = async (id) => {
-    Alert.alert('Delete Note', 'Are you sure you want to delete this note?', [
-      {
-        text: 'Cancel',
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        style: 'destructive',
-        onPress: async () => {
-          const response = await noteService.deleteNote(id);
-          if (response.error) {
-            Alert.alert('Error', response.error);
-          } else {
-            setNotes(notes.filter((note) => note.$id !== id));
-          }
+    if (Platform.OS === 'web') {
+      
+    const confirmed = window.confirm('Are you sure you want to delete this note?');
+    if (!confirmed) return;
+
+    const response = await noteService.deleteNote(id);
+    if (response.error) {
+      window.alert(`Error: ${response.error}`);
+    } else {
+      setNotes(notes.filter((note) => note.$id !== id));
+    }
+    } else {
+      Alert.alert('Delete Note', 'Are you sure you want to delete this note?', [
+        {
+          text: 'Cancel',
+          style: 'cancel',
         },
-      },
-    ]);
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            const response = await noteService.deleteNote(id);
+            if (response.error) {
+              Alert.alert('Error', response.error);
+            } else {
+              setNotes(notes.filter((note) => note.$id !== id));
+            }
+          },
+        },
+      ]);
+    }
   };
 
   // Edit Note
@@ -134,8 +153,12 @@ const MaterialsScreen = () => {
       <AddMaterialModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        newNote={newNote}
-        setNewNote={setNewNote}
+        newName={newName}
+        setNewName={setNewName}
+        newQuantity={newQuantity}
+        setNewQuantity={setNewQuantity}
+        newUnits={newUnits}
+        setNewUnits={setNewUnits}
         addNote={addNote}
       />
     </View>

@@ -9,7 +9,10 @@ import {
 
 const MaterialListItem = ({ note, onDelete, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedText, setEditedText] = useState(note.text);
+  const [editedText, setEditedText] = useState(note.name); //text is name, need to refactor
+  const [editedQuantity, seteditedQuantity] = useState(note.text);
+  const [editedUnits, seteditedUnits] = useState(note.text);
+
   const inputRef = useRef(null);
 
   const handleSave = () => {
@@ -31,7 +34,7 @@ const MaterialListItem = ({ note, onDelete, onEdit }) => {
           returnKeyType='done'
         />
       ) : (
-        <Text style={styles.noteText}>{note.text}</Text>
+        <Text style={styles.noteText}>{note.name} | {note.quantity} {note.units}</Text>
       )}
       <View style={styles.actions}>
         {isEditing ? (

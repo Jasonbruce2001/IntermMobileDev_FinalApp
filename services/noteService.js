@@ -27,13 +27,21 @@ const noteService = {
     }
   },
   // Add New Note
-  async addNote(user_id, text) {
-    if (!text) {
+  async addNote(user_id, name, quantity, units) {
+    if (!name) {
       return { error: 'Note text cannot be empty' };
+    }
+    if (!quantity) {
+      return { error: 'Quantity text cannot be empty' };
+    }
+    if (!units) {
+      return { error: 'Units text cannot be empty' };
     }
 
     const data = {
-      text: text,
+      name: name,
+      quantity: parseInt(quantity),
+      units: units,
       createdAt: new Date().toISOString(),
       user_id: user_id,
     };
@@ -52,9 +60,9 @@ const noteService = {
     return { data: response };
   },
   // Update Note
-  async updateNote(id, text) {
+  async updateNote(id, name, quantity, units) {
     const response = await databaseService.updateDocument(dbId, colId, id, {
-      text,
+      name, quantity, units
     });
 
     if (response?.error) {

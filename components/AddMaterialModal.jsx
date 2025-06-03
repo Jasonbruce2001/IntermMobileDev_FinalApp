@@ -10,8 +10,12 @@ import {
 const AddMaterialModal = ({
   modalVisible,
   setModalVisible,
-  newNote,
-  setNewNote,
+  newName,
+  setNewName,
+  newQuantity,
+  setNewQuantity,
+  newUnits,
+  setNewUnits,
   addNote,
 }) => {
   return (
@@ -28,24 +32,24 @@ const AddMaterialModal = ({
             style={styles.input}
             placeholder='Name...'
             placeholderTextColor='#aaa'
-            value={newNote}
-            onChangeText={setNewNote}
+            value={newName}
+            onChangeText={setNewName}
           />
           <View style={styles.inputContainer}>
             <TextInput
               style={[styles.inputQuantity]}
               placeholder='Quantity...'
               placeholderTextColor='#aaa'
-              value={newNote}
-              onChangeText={setNewNote}
-              type
+              value={newQuantity}
+              onChangeText={setNewQuantity}
+              keyboardType="numeric"
             />
             <TextInput
               style={styles.inputUnits}
               placeholder='Units...'
               placeholderTextColor='#aaa'
-              value={newNote}
-              onChangeText={setNewNote}
+              value={newUnits}
+              onChangeText={setNewUnits}
               type
             />
           </View>
