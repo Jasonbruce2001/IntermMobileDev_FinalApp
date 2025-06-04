@@ -61,14 +61,11 @@ const noteService = {
   },
   // Update Note
   async updateNote(id, name, quantity, units) {
-    console.log(quantity);
     var quantity = parseInt(quantity);
 
     const response = await databaseService.updateDocument(dbId, colId, id, {
       name, quantity, units
     });
-
-    console.log(response);
 
     if (response?.error) {
       return { error: response.error };
