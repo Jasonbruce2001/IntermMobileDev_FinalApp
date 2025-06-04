@@ -17,7 +17,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!loading && user) {
-      router.replace('/dashboard');
+      router.replace('/materials');
     }
   }, [user, loading]);
 
