@@ -9,32 +9,59 @@ import {
 
 const MaterialListItem = ({ note, onDelete, onEdit }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedText, setEditedText] = useState(note.name); //text is name, need to refactor
-  const [editedQuantity, seteditedQuantity] = useState(note.text);
-  const [editedUnits, seteditedUnits] = useState(note.text);
+  const [editedName, setEditedName] = useState(note.name); //text is name, need to refactor
+  const [editedQuantity, setEditedQuantity] = useState(note.quantity);
+  const [editedUnits, setEditedUnits] = useState(note.units);
 
   const inputRef = useRef(null);
 
   const handleSave = () => {
-    if (editedText.trim() === '') return;
-    onEdit(note.$id, editedText);
+    if (editedName.trim() === '') return;
+
+    console.log("handling save");
+
+    onEdit(note.$id, editedName, editedQuantity, editedUnits);
+    
     setIsEditing(false);
   };
 
   return (
     <View style={styles.MaterialListItem}>
       {isEditing ? (
-        <TextInput
-          ref={inputRef}
-          style={styles.input}
-          value={editedText}
-          onChangeText={setEditedText}
-          autoFocus
-          onSubmitEditing={handleSave}
-          returnKeyType='done'
-        />
+        <View>
+          <TextInput
+            ref={inputRef}
+            style={styles.input}
+            value={editedName}
+            onChangeText={setEditedName}
+            autoFocus
+            onSubmitEditing={handleSave}
+            returnKeyType='done'
+          />
+          <TextInput
+            ref={inputRef}
+            style={styles.input}
+            value={editedUnits}
+            onChangeText={setEditedUnits}
+            autoFocus
+            onSubmitEditing={handleSave}
+            returnKeyType='done'
+          />
+          <TextInput
+            ref={inputRef}
+            style={styles.input}
+            value={editedQuantity}
+            onChangeText={setEditedQuantity}
+            autoFocus
+            onSubmitEditing={handleSave}
+            returnKeyType='done'
+          />
+        </View>
       ) : (
-        <Text style={styles.noteText}>{note.name} | {note.quantity} {note.units}</Text>
+        <View>
+          <Text style={styles.noteName}>{note.name}</Text>
+          <Text style={styles.noteText}>{note.units} x {note.quantity}</Text>
+        </View>
       )}
       <View style={styles.actions}>
         {isEditing ? (
@@ -68,6 +95,10 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     marginVertical: 5,
+  },
+  noteName: {
+    fontWeight: "bold",
+    fontSize: 18,
   },
   noteText: {
     fontSize: 18,

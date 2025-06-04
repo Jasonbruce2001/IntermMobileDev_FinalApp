@@ -108,19 +108,26 @@ const MaterialsScreen = () => {
   };
 
   // Edit Note
-  const editNote = async (id, newText) => {
-    if (!newText.trim()) {
-      Alert.alert('Error', 'Note text cannot be empty');
+  const editNote = async (id, newName, newQuantity, newUnits) => {
+    if (!newName.trim() || !String(newQuantity).trim() || !String(newUnits.trim())) {
+      console.log("Empty Field Encountered");
+
+      if(Platform.OS === "web"){
+        Window.alert('Please fill out all fields.');
+      } else {
+        Alert.alert('Error', 'Please fill out all fields.');
+      }
+    
       return;
     }
 
-    const response = await noteService.updateNote(id, newText);
+    const response = await noteService.updateNote(id, newName, newQuantity, newUnits);
     if (response.error) {
       Alert.alert('Error', response.error);
     } else {
-      setNotes((prevNotes) =>
-        prevNotes.map((note) =>
-          note.$id === id ? { ...note, text: response.data.text } : note
+      setNotes((prevItems) =>
+        prevItems.map((item) =>
+          item.$id === id ? { ...item, text: response.data.text } : item
         )
       );
     }
