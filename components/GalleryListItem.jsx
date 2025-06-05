@@ -14,6 +14,7 @@ const GalleryListItem = ({ item, onDelete, onEdit }) => {
   const [editedLink, setEditedLink] = useState(item.link);
 
   const inputRef = useRef(null);
+  const date = item.dateAdded;
 
   const handleSave = () => {
     if (editedTitle.trim() === '') return;
@@ -50,11 +51,11 @@ const GalleryListItem = ({ item, onDelete, onEdit }) => {
         </View>
       ) : (
         <View style={styles.galleryItem}>
+          <Image source={{ uri: item.link }} style={styles.image} />
           <View style={styles.galleryText}>
             <Text>Title: {item.title}</Text>
-            <Text>Date Uploaded: {item.dateAdded}</Text>
+            <Text>Date Uploaded: {date.substring(0,10)}</Text>
           </View>
-          <Image source={{ uri: item.link }} style={styles.image} />
         </View>
       )}
       <View style={styles.actions}>
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     marginVertical: 5,
+    height: 200,
   },
   itemName: {
     fontWeight: "bold",
@@ -100,6 +102,8 @@ const styles = StyleSheet.create({
   delete: {
     fontSize: 18,
     color: 'red',
+    height: 10,
+
   },
   actions: {
     flexDirection: 'row',
@@ -107,14 +111,16 @@ const styles = StyleSheet.create({
   edit: {
     fontSize: 18,
     marginRight: 10,
+    height: 10,
     color: 'blue',
   },
     galleryItem: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     height: 150,
   },
   galleryText: {
     padding: 10,
+    flex: 1,
   },
   image: {
     width: 150,
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 10,
     backgroundColor: "black",
+    flex: 1,
   },
 });
 
