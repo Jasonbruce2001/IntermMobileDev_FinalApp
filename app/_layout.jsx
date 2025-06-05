@@ -30,15 +30,10 @@ const RootLayout = () => {
                 <Text style={styles.headerTitle}>Artist Central</Text>
                 <HeaderLogout />
               </View>
-            ),
-            contentStyle: {
-              paddingHorizontal: 10,
-              paddingTop: 10,
-              backgroundColor: '#fff',
-            },
-          }}
-        >
+            )}}>
+
           <Stack.Screen name='(tabs)' options={{ headerShown:"false" }} />
+
         </Stack>
     </AuthProvider>
   );

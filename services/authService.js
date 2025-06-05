@@ -39,6 +39,7 @@ const authService = {
   // Logout user
   async logout() {
     try {
+      
       await account.deleteSession("current");
     } catch (error) {
       return {
