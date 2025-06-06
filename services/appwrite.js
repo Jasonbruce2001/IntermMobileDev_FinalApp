@@ -7,6 +7,7 @@ const config = {
   db: process.env.EXPO_PUBLIC_APPWRITE_DB_ID,
   col: {
     notes: process.env.EXPO_PUBLIC_APPWRITE_COL_NOTES_ID,
+    gallery: process.env.EXPO_PUBLIC_APPWRITE_COL_GALLERY_ID,
   },
 };
 
@@ -24,7 +25,6 @@ switch (Platform.OS) {
 }
 
 const database = new Databases(client);
-
 const account = new Account(client);
 
 export { database, config, client, account };
