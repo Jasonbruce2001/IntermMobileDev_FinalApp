@@ -5,6 +5,7 @@ import AddGalleryModal from "../../components/AddGalleryModal"
 import galleryService from "../../services/galleryService"
 import { useAuth } from '@/contexts/AuthContext';
 import GalleryList from "../../components/GalleryList";
+import FileUpload from "../../components/FileUpload";
 
 export default gallery = () => {
   const { user, loading: authLoading } = useAuth();  
@@ -141,6 +142,8 @@ export default gallery = () => {
         >
          <Text style={styles.addButtonText}>Upload Image</Text>
         </TouchableOpacity>
+
+        
 
         <AddGalleryModal
           modalVisible={modalVisible}
